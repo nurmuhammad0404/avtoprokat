@@ -1,0 +1,32 @@
+POST http://localhost:8080/driver/adm
+Content-Type: application/json
+
+{
+  "name": "Toshmat",
+  "surname": "Toshmatov",
+  "userName": "@toshmat",
+  "phone": "+9989145265894"
+}
+
+###
+
+GET http://localhost:8080/driver/adm
+Content-Type: application/json
+
+###
+
+PUT http://localhost:8080/driver/adm/1
+Content-Type: application/json
+
+{
+  "name": "Eshmat",
+  "surname": "Eshmatov",
+  "userName": "@eshmat",
+  "status": "NOTACTIVE",
+  "phone": "+998914785263"
+}
+
+###
+
+DELETE http://localhost:8080/driver/adm/2
+Content-Type: application/json

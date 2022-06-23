@@ -1,0 +1,16 @@
+POST http://localhost:8080/teritory
+Content-Type: application/json
+
+{
+  "name": "Hudud4"
+}
+###
+
+GET http://localhost:8080/teritory?page=0&size=9
+Content-Type: application/json
+###
+
+PUT http://localhost:8080/teritory/3/hudud9
+###
+
+DELETE http://localhost:8080/teritory/4

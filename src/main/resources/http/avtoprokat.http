@@ -1,0 +1,26 @@
+POST http://localhost:8080/avtoprokat/adm
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjU1NzM2MzE4LCJleHAiOjE2NTU3Mzk5MTgsImlzcyI6Imp3dCBwcm9kdWN0aW9uIiwicm9sZSI6IkFETUlOIn0.-lSuE6rPX6cFA6ZTfLDA1GSfWeyEAnGMFdRrgYMs7YA
+
+{
+  "distrCode": "VALI01",
+  "workDate": "21/6/2022",
+  "carNumber": "40K123LA",
+  "distrName": "Vali",
+  "driverName": "Eshmat",
+  "teritory": "Hudud1",
+  "distrUserName": "@valijon",
+  "driverUserName": "@eshmat"
+}
+
+###
+GET http://localhost:8080/avtoprokat/adm
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjU1NDQ4Mjk0LCJleHAiOjE2NTU0NTE4OTQsImlzcyI6Imp3dCBwcm9kdWN0aW9uIiwicm9sZSI6IkFETUlOIn0.mIXwrX6dHj_E0n3NX8GyNvaTDZau69VXTMnj_CTjNis
+
+###
+
+#GET http://localhost:8080/avtoprokat/adm/workDate?workDate=5/6/2022
+#Content-Type: application/json
+#Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjU1MTI2MDQyLCJleHAiOjE2NTUxMjk2NDIsImlzcyI6Imp3dCBwcm9kdWN0aW9uIiwicm9sZSI6IlVTRVIifQ.MgizoeBw_Jclay9C9SuaIOu6HCrCbAOEyEvRxynEGeQ
+

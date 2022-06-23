@@ -1,0 +1,28 @@
+POST http://localhost:8080/car/adm
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjU1MTE5ODg5LCJleHAiOjE2NTUxMjM0ODksImlzcyI6Imp3dCBwcm9kdWN0aW9uIiwicm9sZSI6IkFETUlOIn0.xP1m0xDjyhzFheebsTFeIW7-zlTQXJsY_9iJIwvL48k
+
+
+{
+  "name": "labo",
+  "number": "40A555JA"
+}
+
+###
+
+GET http://localhost:8080/car/adm
+Content-Type: application/json
+
+###
+
+PUT http://localhost:8080/car/adm/3
+Content-Type: application/json
+
+{
+  "name": "labo",
+  "number": "40K123LA"
+}
+
+###
+
+DELETE http://localhost:8080/car/adm/3
