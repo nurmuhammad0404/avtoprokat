@@ -1,5 +1,6 @@
 package com.company.dto;
 
+import com.company.entity.ProfileEntity;
 import com.company.enums.DriverStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -14,6 +15,8 @@ public class DriverDTO {
     private String surname;
     private String userName;
     private String phone;
+    private String profileId;
+    private ProfileEntity profile;
     private Boolean visible;
     private DriverStatus status;
     private LocalDateTime createdDate;

@@ -2,6 +2,7 @@ package com.company.controller;
 
 import com.company.dto.CarDTO;
 import com.company.service.CarService;
+import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,8 @@ public class CarController {
     private CarService carService;
 
     @PostMapping("/adm")
-    public ResponseEntity<?> create(@RequestBody CarDTO dto){
+    public ResponseEntity<?> create(@RequestBody CarDTO dto, HttpServletRequest request){
+//        String pId = JwtUtil.getIdFromHeader(request);
         return ResponseEntity.ok(carService.create(dto));
     }
 

@@ -2,6 +2,7 @@ package com.company.service;
 
 import com.company.dto.TeritoryDTO;
 import com.company.entity.TeritoryEntity;
+import com.company.enums.DriverStatus;
 import com.company.enums.TeritoryStatus;
 import com.company.exc.ItemNotFoundException;
 import com.company.exc.TeritoryAlreadyExistsException;
@@ -24,8 +25,8 @@ public class TeritoryService {
 
     public TeritoryDTO create(TeritoryDTO dto){
         Optional<TeritoryEntity> optional = teritoryRepository.findByName(dto.getName());
-        if (optional.isPresent()){
-            throw new TeritoryAlreadyExistsException("Teritory already exists");
+        if (optional.isPresent() && optional.get().getVisible().equals(true)){
+            throw new TeritoryAlreadyExistsException("Hudud avval kiritlgan");
         }
 
         TeritoryEntity entity = new TeritoryEntity();
@@ -35,7 +36,6 @@ public class TeritoryService {
         teritoryRepository.save(entity);
 
         dto.setId(entity.getId());
-        dto.setVisible(entity.getVisible());
         dto.setStatus(entity.getStatus());
         dto.setCreatedDate(entity.getCreatedDate());
 
@@ -44,8 +44,11 @@ public class TeritoryService {
 
     public TeritoryDTO getById(Integer id){
         TeritoryEntity entity = teritoryRepository.findById(id).orElseThrow(() -> {
-            throw new ItemNotFoundException("Teritory not found");
+            throw new ItemNotFoundException("Hudud topilmadi");
         });
+        if (entity.getVisible().equals(false)){
+            throw new ItemNotFoundException("Hudud topilmadi");
+        }
 
         return toDTO(entity);
     }
@@ -63,19 +66,36 @@ public class TeritoryService {
         return teritoryDTOList;
     }
 
-    public boolean update(Integer id, String name){
+    public TeritoryDTO update(Integer id, TeritoryDTO dto){
         TeritoryEntity entity = teritoryRepository.findById(id).orElseThrow(() -> {
-            throw new ItemNotFoundException("Teritory not found");
+            throw new ItemNotFoundException("Hudud toplimadi");
         });
 
-        if (!entity.getName().equals(name)) {
-            Optional<TeritoryEntity> optional = teritoryRepository.findByName(name);
-            if (optional.isPresent()) {
-                throw new TeritoryAlreadyExistsException("Teritory already exists");
+        if (entity.getVisible().equals(false)){
+            throw new ItemNotFoundException("Hudud toplimadi");
+        }
+
+        if (!entity.getName().equals(dto.getName())) {
+            Optional<TeritoryEntity> optional = teritoryRepository.findByName(dto.getName());
+            if (optional.isPresent() && optional.get().getVisible().equals(true)) {
+                throw new TeritoryAlreadyExistsException("Hudud avval kirirtilgan");
             }
         }
 
-        return teritoryRepository.update(name, id) > 0;
+        entity.setName(dto.getName());
+        teritoryRepository.save(entity);
+
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setCreatedDate(entity.getCreatedDate());
+
+        return dto;
+    }
+
+    public void changeStatus(String teritoryName, TeritoryStatus status){
+        teritoryRepository.findByName(teritoryName).orElseThrow(()->new ItemNotFoundException("Haydovchi topilmadi"));
+
+        teritoryRepository.changeStatus(status, teritoryName);
     }
 
     public boolean delete(Integer id){
@@ -90,7 +110,6 @@ public class TeritoryService {
         TeritoryDTO dto = new TeritoryDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
-        dto.setVisible(entity.getVisible());
         dto.setCreatedDate(entity.getCreatedDate());
 
         return dto;

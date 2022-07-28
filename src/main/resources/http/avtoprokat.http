@@ -1,26 +1,42 @@
 POST http://localhost:8080/avtoprokat/adm
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjU1NzM2MzE4LCJleHAiOjE2NTU3Mzk5MTgsImlzcyI6Imp3dCBwcm9kdWN0aW9uIiwicm9sZSI6IkFETUlOIn0.-lSuE6rPX6cFA6ZTfLDA1GSfWeyEAnGMFdRrgYMs7YA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjkxNzY5OSwiZXhwIjoxNjU2OTUzNjk5LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.JT6k9ntEGDpTb-PFOXwhqNVy7OH80h_25dG8JLsQJsA
 
 {
   "distrCode": "VALI01",
-  "workDate": "21/6/2022",
-  "carNumber": "40K123LA",
+  "workDate": "26/6/2022",
+  "carNumber": "40A555JA",
   "distrName": "Vali",
   "driverName": "Eshmat",
   "teritory": "Hudud1",
   "distrUserName": "@valijon",
-  "driverUserName": "@eshmat"
+  "driverUserName": "@eshmatjon"
 }
 
 ###
 GET http://localhost:8080/avtoprokat/adm
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjU1NDQ4Mjk0LCJleHAiOjE2NTU0NTE4OTQsImlzcyI6Imp3dCBwcm9kdWN0aW9uIiwicm9sZSI6IkFETUlOIn0.mIXwrX6dHj_E0n3NX8GyNvaTDZau69VXTMnj_CTjNis
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1Nzg4NzI1NiwiZXhwIjoxNjU3OTIzMjU2LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.QCjaUlIR8NIJKKNhRGFqA_ObuwaA8iFK7o5mLjR_NVU
 
 ###
 
-#GET http://localhost:8080/avtoprokat/adm/workDate?workDate=5/6/2022
-#Content-Type: application/json
-#Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjU1MTI2MDQyLCJleHAiOjE2NTUxMjk2NDIsImlzcyI6Imp3dCBwcm9kdWN0aW9uIiwicm9sZSI6IlVTRVIifQ.MgizoeBw_Jclay9C9SuaIOu6HCrCbAOEyEvRxynEGeQ
+PUT http://localhost:8080/avtoprokat/adm/changeStatus/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjUxMTQ4MiwiZXhwIjoxNjU2NTQ3NDgyLCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.6qE_UhFxyj6oxGozG6Hz27xNEGFQv7uDYS_KvjkNdLQ
 
+###
+
+PUT http://localhost:8080/avtoprokat/adm/4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjM5Njc0NiwiZXhwIjoxNjU2NDMyNzQ2LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.ivC1e7QGmn9CK4qk-F1jTGnEQ5czMXDz6j1WWcNPmcU
+
+{
+  "distrCode": "VALI01",
+  "workDate": "26/6/2022",
+  "carNumber": "40B777KA",
+  "distrName": "Vali",
+  "driverName": "Eshmat",
+  "teritory": "Hudud1",
+  "distrUserName": "@valijon",
+  "driverUserName": "@eshmatjon"
+}

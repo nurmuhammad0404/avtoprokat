@@ -1,5 +1,6 @@
 package com.company.dto;
 
+import com.company.entity.ProfileEntity;
 import com.company.enums.CarStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -14,6 +15,8 @@ public class CarDTO {
     private String number;
     private Boolean visible;
     private CarStatus status;
+    private String profileId;
+    private ProfileEntity profile;
     private LocalDateTime createdDate;
 
 }

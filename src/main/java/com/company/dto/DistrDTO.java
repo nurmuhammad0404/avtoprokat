@@ -1,11 +1,14 @@
 package com.company.dto;
 
+import com.company.entity.ProfileEntity;
 import com.company.enums.DistrStatus;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DistrDTO {
     private Integer id;
     private String name;
@@ -14,10 +17,8 @@ public class DistrDTO {
     private String distrCode;
     private String phone;
     private Boolean visible;
-//    private Integer vehicleId;
-//    private LocalDateTime workDate;
-//    private Integer teritoryId;
-//    private Integer driverId;
+    private String profileId;
+    private ProfileEntity profile;
     private DistrStatus status;
     private LocalDateTime createdDate;
 }

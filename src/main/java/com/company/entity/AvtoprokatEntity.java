@@ -34,6 +34,11 @@ public class AvtoprokatEntity {
     @Column
     private String driverUserName;
 
+    @Column(name = "profile_id")
+    private String profileId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id", updatable = false, insertable = false)
+    private ProfileEntity profile;
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 }

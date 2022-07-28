@@ -1,11 +1,11 @@
 POST http://localhost:8080/profile/adm
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjU0OTc5ODIzLCJleHAiOjE2NTQ5ODM0MjMsImlzcyI6Imp3dCBwcm9kdWN0aW9uIiwicm9sZSI6IkFETUlOIn0.Xh7bl6R3llUOraG5QC0KSU4UO9wKtMPl1ImA4C0pC6M
+#Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjU1OTkxNDg2LCJleHAiOjE2NTYwMjc0ODYsImlzcyI6Imp3dCBwcm9kdWN0aW9uIiwicm9sZSI6IkFETUlOIn0.U7LHWvQg5dh5_5ums0U8gs9wmRiLcWWDtzSeJyLcpRY
 
 {
-  "name": "valihon",
-  "surname": "valihon",
-  "userName": "@valihon",
-  "phone": "+998914521685",
-  "password": "valihon123"
+  "name": "alihon",
+  "surname": "alihonov",
+  "userName": "@alihon",
+  "phone": "+998915874963",
+  "password": "alihon568"
 }

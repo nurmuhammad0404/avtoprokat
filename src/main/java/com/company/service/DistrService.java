@@ -2,6 +2,7 @@ package com.company.service;
 
 import com.company.dto.DistrDTO;
 import com.company.entity.DistrEntity;
+import com.company.entity.ProfileEntity;
 import com.company.enums.DistrStatus;
 import com.company.exc.DistrCodeAlreadyExistsException;
 import com.company.exc.ItemNotFoundException;
@@ -24,30 +25,39 @@ import java.util.Optional;
 public class DistrService {
     @Autowired
     private DistrRepository distrRepository;
+
+//    @Autowired
+//    private ProfileService profileService;
     public DistrDTO create(DistrDTO dto) {
         DistrValidation.isValid(dto);
         Optional<DistrEntity> optional = distrRepository.findByPhoneNumber(dto.getPhone());
 
-        if (optional.isPresent()) {
-            throw new PhoneNumberAlreadyExistsException("Phone number already exists");
+        if (optional.isPresent() && optional.get().getVisible().equals(true)) {
+            throw new PhoneNumberAlreadyExistsException("Bunday telefon raqamli distr mavjud");
         }
 
+
         Optional<DistrEntity> optional1 = distrRepository.findByDistrCode(dto.getDistrCode());
-        if (optional1.isPresent()){
-            throw new DistrCodeAlreadyExistsException("Distr code already exists");
+        if (optional1.isPresent() && optional.get().getVisible().equals(true)){
+            throw new DistrCodeAlreadyExistsException("Bunday codli distr mavjud");
         }
 
         Optional<DistrEntity>optional2 = distrRepository.findByUserName(dto.getUserName());
-        if(optional2.isPresent()){
-            throw new UserNameAlreadyExistsException("Username already exists");
+        if(optional2.isPresent() && optional.get().getVisible().equals(true)){
+            throw new UserNameAlreadyExistsException("Bunday usernameli distr mavjud");
         }
 
-        DistrEntity entity = toEntity(dto);
+//        ProfileEntity profile = profileService.getById(pid);
 
+        DistrEntity entity = toEntity(dto);
+//        entity.setProfileId(pid);
+//        entity.setProfile(profile);
         distrRepository.save(entity);
 
         dto.setId(entity.getId());
         dto.setStatus(entity.getStatus());
+        dto.setProfileId(entity.getProfileId());
+        dto.setProfile(entity.getProfile());
         dto.setCreatedDate(entity.getCreatedDate());
 
         return dto;
@@ -70,23 +80,30 @@ public class DistrService {
     public DistrDTO update(Integer id, DistrDTO dto) {
         DistrValidation.isValid(dto);
 
-        DistrEntity entity = distrRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Distr not found"));
+        DistrEntity entity = distrRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Distr topilmadi"));
 
         if (entity.getVisible().equals(false)){
-            throw new ItemNotFoundException("Distr not found");
+            throw new ItemNotFoundException("Distr topilmadi");
         }
 
         if (!entity.getPhoneNumber().equals(dto.getPhone())){
             Optional<DistrEntity> optional = distrRepository.findByPhoneNumber(dto.getPhone());
-            if (optional.isPresent()){
-                throw new PhoneNumberAlreadyExistsException("Phone number already exists");
+            if (optional.isPresent() && optional.get().getVisible().equals(true)){
+                throw new PhoneNumberAlreadyExistsException("Bunday telefon nomerli distr mavjud");
             }
         }
 
         if (!entity.getUserName().equals(dto.getUserName())){
             Optional<DistrEntity> optional = distrRepository.findByUserName(dto.getUserName());
-            if (optional.isPresent()){
-                throw new UserNameAlreadyExistsException("Username already exists");
+            if (optional.isPresent() && optional.get().getVisible().equals(true)){
+                throw new UserNameAlreadyExistsException("Bunday usernameli distr mavjud");
+            }
+        }
+
+        if (!entity.getDistrCode().equals(dto.getDistrCode())){
+            Optional<DistrEntity> optional = distrRepository.findByDistrCode(dto.getDistrCode());
+            if (optional.isPresent() && optional.get().getVisible().equals(true)){
+                throw new UserNameAlreadyExistsException("Bunday distrCodeli distr mavjud");
             }
         }
 
@@ -102,7 +119,7 @@ public class DistrService {
     }
 
     public boolean delete(Integer id){
-        distrRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Item not found"));
+        distrRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Distr topilmadi"));
 
         return distrRepository.delete(false, id) > 0;
 
@@ -110,7 +127,7 @@ public class DistrService {
 
 
     public void changeStatus(String distrCode, DistrStatus status){
-        distrRepository.findByDistrCode(distrCode).orElseThrow(() -> new ItemNotFoundException("Distr not found"));
+        distrRepository.findByDistrCode(distrCode).orElseThrow(() -> new ItemNotFoundException("Distr topilmadi"));
         distrRepository.changeStatus(status, distrCode);
     }
     public DistrEntity toEntity(DistrDTO dto) {
@@ -135,6 +152,8 @@ public class DistrService {
         dto.setDistrCode(entity.getDistrCode());
         dto.setPhone(entity.getPhoneNumber());
         dto.setStatus(entity.getStatus());
+//        dto.setProfileId(entity.getProfileId());
+//        dto.setProfile(entity.getProfile());
         dto.setCreatedDate(entity.getCreatedDate());
         return dto;
     }

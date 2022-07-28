@@ -6,18 +6,20 @@ import com.company.exc.AppForbiddenException;
 import com.company.exc.TokenNotValidException;
 import io.jsonwebtoken.*;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import java.net.http.HttpRequest;
 import java.util.Date;
 
 public class JwtUtil {
     private static final String secretKey = "kalitso'z";
 
-    public static String doEncode(Integer id, ProfileRole role, long minute) {
+    public static String doEncode(String id, ProfileRole role, long minute) {
         JwtBuilder jwtBuilder = Jwts.builder();
-        jwtBuilder.setSubject(Integer.toString(id));
+        jwtBuilder.setSubject(id);
         jwtBuilder.setIssuedAt(new Date());
         jwtBuilder.signWith(SignatureAlgorithm.HS256, secretKey);
-        jwtBuilder.setExpiration(new Date(System.currentTimeMillis() + (minute * 60 * 1000)));
+        jwtBuilder.setExpiration(new Date(System.currentTimeMillis() + (minute * 600 * 1000)));
         jwtBuilder.setIssuer("jwt production");
 
         if (role != null) {
@@ -30,32 +32,32 @@ public class JwtUtil {
 
     public static ProfileJwtDTO decode(String jwt) {
         JwtParser jwtParser = Jwts.parser();
-        jwtParser.setSigningKey(secretKey);
 
+        jwtParser.setSigningKey(secretKey);
         Jws<Claims> jws = jwtParser.parseClaimsJws(jwt);
 
         Claims claims = jws.getBody();
-        String id = claims.getId();
+        String id = claims.getSubject();
         String role = String.valueOf(claims.get("role"));
         return new ProfileJwtDTO(id, ProfileRole.valueOf(role));
     }
 
 
-    public static Integer decodeAndGetId(String jwt) {
-        JwtParser jwtParser = Jwts.parser();
+//    public static Integer decodeAndGetId(String jwt) {
+//        JwtParser jwtParser = Jwts.parser();
+//
+//        jwtParser.setSigningKey(secretKey);
+//        Jws<Claims> jws = jwtParser.parseClaimsJws(jwt);
+//
+//        Claims claims = jws.getBody();
+//        String id = claims.getId();
+//
+//        return Integer.parseInt(id);
+//    }
 
-        jwtParser.setSigningKey(secretKey);
-        Jws<Claims> jws = jwtParser.parseClaimsJws(jwt);
 
-        Claims claims = jws.getBody();
-        String id = claims.getId();
-
-        return Integer.parseInt(id);
-    }
-
-
-
-    public static String getIdFromHeader(HttpServletRequest request, ProfileRole... requiredRoles) {
+    public static String getIdFromHeader(ServletRequest servletRequest, ProfileRole... requiredRoles) {
+        final HttpServletRequest request = (HttpServletRequest) servletRequest;
         try {
             ProfileJwtDTO dto = (ProfileJwtDTO) request.getAttribute("profileJwtDTO");
             if (requiredRoles == null || requiredRoles.length == 0) {

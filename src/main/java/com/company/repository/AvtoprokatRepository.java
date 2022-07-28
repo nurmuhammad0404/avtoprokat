@@ -16,5 +16,5 @@ public interface AvtoprokatRepository extends JpaRepository<AvtoprokatEntity, In
 
     List<AvtoprokatEntity> findByCreatedDateBetween(LocalDateTime localDateTime, LocalDateTime localDateTime1);
 
-
 }
+

@@ -24,16 +24,15 @@ public class TeritoryController {
         return ResponseEntity.ok(teritoryService.getList(page, size));
     }
 
-
     @GetMapping("/adm/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Integer id){
         return ResponseEntity.ok(teritoryService.getById(id));
     }
 
-    @PutMapping("/adm/{id}/{name}")
+    @PutMapping("/adm/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id,
-                                    @PathVariable("name") String name){
-        return ResponseEntity.ok(teritoryService.update(id,name));
+                                    @RequestBody TeritoryDTO dto){
+        return ResponseEntity.ok(teritoryService.update(id,dto));
     }
 
     @DeleteMapping("/adm/{id}")

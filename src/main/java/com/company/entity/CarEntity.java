@@ -24,6 +24,11 @@ public class CarEntity {
     @Column
     @Enumerated(EnumType.STRING)
     private CarStatus status;
+    @Column(name = "profile_id")
+    private String profileId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id", updatable = false, insertable = false)
+    private ProfileEntity profile;
     @Column
     private LocalDateTime createdDate;
 }

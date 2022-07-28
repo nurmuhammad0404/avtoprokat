@@ -2,6 +2,7 @@ package com.company.service;
 
 import com.company.dto.CarDTO;
 import com.company.entity.CarEntity;
+import com.company.entity.ProfileEntity;
 import com.company.enums.CarStatus;
 import com.company.exc.AppForbiddenException;
 import com.company.exc.CarAlreadyExistsException;
@@ -25,6 +26,8 @@ import java.util.Optional;
 public class CarService {
     @Autowired
     private CarRepository carRepository;
+    @Autowired
+    private ProfileService profileService;
 
     public CarDTO create(CarDTO dto) {
         CarValidation.isValid(dto);
@@ -32,17 +35,22 @@ public class CarService {
         Optional<CarEntity> optional = carRepository.findByNameAndNumber(dto.getName(), dto.getNumber());
 
         if (optional.isPresent()) {
-            throw new CarAlreadyExistsException("Car already exists");
+            throw new CarAlreadyExistsException("Mashina avval kiritlgan");
         }
 
+//        ProfileEntity profile = profileService.getById(pid);
         CarEntity entity = new CarEntity();
         entity.setName(dto.getName());
         entity.setNumber(dto.getNumber());
         entity.setStatus(CarStatus.NOTACTIVE);
+//        entity.setProfileId(pid);
+//        entity.setProfile(profile);
         entity.setCreatedDate(LocalDateTime.now());
 
         carRepository.save(entity);
         dto.setId(entity.getId());
+        dto.setProfileId(entity.getProfileId());
+        dto.setProfile(entity.getProfile());
         dto.setCreatedDate(entity.getCreatedDate());
 
         return dto;
@@ -67,17 +75,17 @@ public class CarService {
     public CarDTO update(Integer id, CarDTO dto) {
         CarValidation.isValid(dto);
         CarEntity entity = carRepository.findById(id).orElseThrow(() -> {
-            throw new ItemNotFoundException("Car not found");
+            throw new ItemNotFoundException("Mashina topilmadi");
         });
 
         if (entity.getVisible().equals(false)){
-            throw new ItemNotFoundException("Car not found");
+            throw new ItemNotFoundException("Mashina topilmadi");
         }
 
         if (!entity.getNumber().equals(dto.getNumber())) {
             Optional<CarEntity> optional = carRepository.findByNumber(dto.getNumber());
             if (optional.isPresent()) {
-                throw new AppForbiddenException("Car already exists");
+                throw new AppForbiddenException("Mashina avval kiritilgan");
             }
         }
 
@@ -90,7 +98,7 @@ public class CarService {
     }
 
     public void changeStatus(String number, CarStatus status){
-        carRepository.findByNumber(number).orElseThrow(() -> new ItemNotFoundException("Car not found"));
+        carRepository.findByNumber(number).orElseThrow(() -> new ItemNotFoundException("Mashina topilmadi"));
 
         carRepository.changeStatus(status, number);
     }
@@ -98,7 +106,7 @@ public class CarService {
 
     public boolean delete(Integer id) {
         carRepository.findById(id).orElseThrow(() -> {
-            throw new ItemNotFoundException("Car not found");
+            throw new ItemNotFoundException("Mashina topilmadi");
         });
 
         return carRepository.delete(false, id) > 0;
@@ -109,6 +117,8 @@ public class CarService {
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setNumber(entity.getNumber());
+        dto.setProfileId(entity.getProfileId());
+//        dto.setProfile(entity.getProfile());
         dto.setCreatedDate(entity.getCreatedDate());
         return dto;
     }

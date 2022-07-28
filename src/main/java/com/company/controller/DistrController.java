@@ -1,10 +1,13 @@
 package com.company.controller;
 
+
 import com.company.dto.DistrDTO;
 import com.company.service.DistrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/distr")
@@ -13,7 +16,8 @@ public class DistrController {
     private DistrService distrService;
 
     @PostMapping("/adm")
-    public ResponseEntity<?> create(@RequestBody DistrDTO dto){
+    public ResponseEntity<?> create(@RequestBody DistrDTO dto, HttpServletRequest request){
+//        String pId = JwtUtil.getIdFromHeader(request);
         return ResponseEntity.ok(distrService.create(dto));
     }
 

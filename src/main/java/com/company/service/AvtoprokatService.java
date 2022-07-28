@@ -5,6 +5,7 @@ import com.company.entity.*;
 import com.company.enums.CarStatus;
 import com.company.enums.DistrStatus;
 import com.company.enums.DriverStatus;
+import com.company.enums.TeritoryStatus;
 import com.company.exc.*;
 import com.company.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,12 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 @Service
+
 public class AvtoprokatService {
     @Autowired
     private AvtoprokatRepository avtoprokatRepository;
@@ -39,105 +41,30 @@ public class AvtoprokatService {
     @Autowired
     private DriverRepository driverRepository;
 
-    public AvtoprokatDTO create(AvtoprokatDTO dto) {
-//        if (dto.getDistrCode() == null) {
-//            throw new AppBadRequestException("Distr code kritilmadi");
-//        }
-//        if (dto.getDistrName() == null){
-//            throw new AppBadRequestException("Distr ismi kiritlmadi");
-//        }
-//        if (dto.getDistrUserName() == null){
-//            throw new AppBadRequestException("Distr username kiritilmadi");
-//        }
-//        if (dto.getDriverName() == null){
-//            throw new AppBadRequestException("Haydovchi ismi kiritilmadi");
-//        }
-//        if (dto.getCarNumber() == null){
-//            throw new AppBadRequestException("Mashina raqami kiritilmadi");
-//        }
-//        if (dto.getTeritory() == null){
-//            throw new AppBadRequestException("Hudud kirilmadi");
-//        }
-//
-//        //distr
-//        Optional<DistrEntity> distr = distrRepository.findByDistrCode(dto.getDistrCode());
-//        if (distr.isEmpty() || distr.get().getVisible().equals(false)) {
-//            throw new ItemNotFoundException("Bunday codli distr mavjud emas");
-//        }
-//
-//        if (distr.get().getStatus().equals(DistrStatus.ACTIVE)) {
-//            throw new ItemActiveException("Distr active");
-//        }
-//        Optional<DistrEntity> distrUsername = distrRepository.findByUserName(dto.getDistrUserName());
-//        if (distrUsername.isEmpty()) {
-//            throw new ItemNotFoundException("Bunday usernameli distr topilmadi");
-//        }
-//
-//        //distr parametrlari mosligi tekshiriladi
-//        Optional<DistrEntity> distrCodeName = distrRepository.findByDistrCodeAndName(dto.getDistrCode(), dto.getDistrName());
-//        if (distrCodeName.isEmpty()){
-//            throw new ItemNotFoundException("Distr code va ismi mos kelmadi");
-//        }
-//        Optional<DistrEntity> nameUserName = distrRepository.findByNameAndUserName(dto.getDistrName(), dto.getDistrUserName());
-//        if (nameUserName.isEmpty()){
-//            throw new ItemNotFoundException("Distr ismi va username mos kelmadi");
-//        }
-//        Optional<DistrEntity> codeUserName = distrRepository.findByDistrCodeAndUserName(dto.getDistrCode(), dto.getDistrUserName());
-//        if (codeUserName.isEmpty()){
-//            throw new ItemNotFoundException("Distr code va username mos kelmadi");
-//        }
-//
-//        //car
-//        Optional<CarEntity> car = carRepository.findByNumber(dto.getCarNumber());
-//        if (car.get().getVisible().equals(false)) {
-//            throw new ItemNotFoundException("Bunday raqamli mashina mavjud emas");
-//        }
-//        if (car.get().getStatus().equals(CarStatus.ACTIVE)) {
-//            throw new ItemActiveException("Mashina active");
-//        }
-//
-//        //driver
-//        Optional<DriverEnitity> driver = driverRepository.findByUserName(dto.getDriverUserName());
-//        if (driver.get().getVisible().equals(false)) {
-//            throw new ItemNotFoundException("Bunday usernameli haydovchi mavjud emas");
-//        }
-//        Optional<DriverEnitity> name = driverRepository.findByName(dto.getDriverName());
-//        if (name.isEmpty()){
-//            throw new ItemNotFoundException("Bunday ismli haydovchi mavjud emas");
-//        }
-//        if (driver.get().getStatus().equals(DriverStatus.ACTIVE)) {
-//            throw new ItemActiveException("Haydovchi active");
-//        }
-//
-//        //driver parametrlari tekshiriladi
-//        Optional<DriverEnitity> driverNameUserName = driverRepository.findByNameAndUserName(dto.getDriverName(), dto.getDriverUserName());
-//        if (driverNameUserName.isEmpty()){
-//            throw new ItemNotFoundException("Haydovchi ismi va userName mos kelmadi");
-//        }
-        avtoprokatValidation(dto);
+    @Autowired
+    private TeritoryRepository teritoryRepository;
+    @Autowired
+    private TeritoryService teritoryService;
 
-    /*    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
-        LocalDate localDate1;
-        try {
-            localDate1 = LocalDate.parse(dto.getWorkDate(), dateTimeFormatter);
-        } catch (RuntimeException e) {
-            throw new DateFormatWrongException("Sana " + LocalDate.now().getDayOfMonth() + "/" + LocalDate.now().getMonthValue()
-                    + "/" + LocalDate.now().getYear() + " ko'rinishida berilishi kerak");
-        }*/
+    public AvtoprokatDTO create(AvtoprokatDTO dto) {
+
+        avtoprokatValidation(dto);
 
         AvtoprokatEntity entity = new AvtoprokatEntity();
         entity.setDistrCode(dto.getDistrCode());
 
-        if (dto.getWorkDate() == null){
+        if (dto.getWorkDate() == null) {
             entity.setWorkDate(LocalDate.now());
             String localDate = LocalDate.now().getDayOfMonth() + "/" + LocalDate.now().
                     getMonthValue() +
                     "/" + LocalDate.now().getYear();
             dto.setWorkDate(localDate);
-        }else {
+        } else {
             LocalDate localDate = checkWorkDateFormat(dto.getWorkDate());
             entity.setWorkDate(localDate);
         }
+
+//        ProfileEntity profile = profileService.getById(pId);
 
         entity.setCarNumber(dto.getCarNumber());
         entity.setDistrName(dto.getDistrName());
@@ -146,15 +73,20 @@ public class AvtoprokatService {
         entity.setDistrUserName(dto.getDistrUserName());
         entity.setDriverName(dto.getDriverName());
         entity.setDriverUserName(dto.getDriverUserName());
+//        entity.setProfileId(pId);
+//        entity.setProfile(profile);
         entity.setCreatedDate(LocalDateTime.now());
 
         avtoprokatRepository.save(entity);
 
         distrService.changeStatus(entity.getDistrCode(), DistrStatus.ACTIVE);
-        carService.changeStatus(entity.getCarNumber(), CarStatus.ACTIVE );
+        carService.changeStatus(entity.getCarNumber(), CarStatus.ACTIVE);
         driverService.changeStatus(entity.getDriverUserName(), DriverStatus.ACTIVE);
+        teritoryService.changeStatus(entity.getTeritory(), TeritoryStatus.ACTIVE);
 
         dto.setId(entity.getId());
+        dto.setProfileId(entity.getProfileId());
+        dto.setProfile(entity.getProfile());
         dto.setCreatedDate(entity.getCreatedDate());
 
         return dto;
@@ -172,30 +104,67 @@ public class AvtoprokatService {
         return avtoprokatDTOList;
     }
 
-//    public List<AvtoprokatDTO> getListByWorkDate(String workDate, int size, int page) {
-//        Pageable pageable = PageRequest.of(size, page);
-//        LocalDate localDate = checkWorkDateFormat(workDate);
-//        Page<AvtoprokatEntity> avtoprokatEntities = avtoprokatRepository.findAllByCreatedDate(localDate, pageable);
-//
-//        List<AvtoprokatDTO> avtoprokatDTOList = new LinkedList<>();
-//
-//        avtoprokatEntities.forEach(avtoprokatEntity -> avtoprokatDTOList.add(toDTO(avtoprokatEntity)));
-//
-//        return avtoprokatDTOList;
-//    }
+    public Boolean changeStatus(Integer id) {
+        AvtoprokatEntity entity = avtoprokatRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Avoprokat topilmadi"));
 
-    public static LocalDate checkWorkDateFormat(String workDate){
+        distrService.changeStatus(entity.getDistrCode(), DistrStatus.NOTACTIVE);
+        carService.changeStatus(entity.getCarNumber(), CarStatus.NOTACTIVE);
+        driverService.changeStatus(entity.getDriverUserName(), DriverStatus.NOTACTIVE);
+        teritoryService.changeStatus(entity.getTeritory(), TeritoryStatus.NOTACTIVE);
+
+        return true;
+    }
+
+    public AvtoprokatDTO update(Integer id, AvtoprokatDTO dto) {
+        AvtoprokatEntity entity = avtoprokatRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Avoprokat topilmadi"));
+
+        avtoprokatValidation(dto);
+
+        entity.setDistrCode(dto.getDistrCode());
+
+        if (dto.getWorkDate() == null) {
+            entity.setWorkDate(LocalDate.now());
+            String localDate = LocalDate.now().getDayOfMonth() + "/" + LocalDate.now().
+                    getMonthValue() +
+                    "/" + LocalDate.now().getYear();
+            dto.setWorkDate(localDate);
+        } else {
+            LocalDate localDate = checkWorkDateFormat(dto.getWorkDate());
+            entity.setWorkDate(localDate);
+        }
+
+        entity.setCarNumber(dto.getCarNumber());
+        entity.setDistrName(dto.getDistrName());
+        entity.setDriverName(dto.getDriverName());
+        entity.setTeritory(dto.getTeritory());
+        entity.setDistrUserName(dto.getDistrUserName());
+        entity.setDriverName(dto.getDriverName());
+        entity.setDriverUserName(dto.getDriverUserName());
+        avtoprokatRepository.save(entity);
+
+        distrService.changeStatus(entity.getDistrCode(), DistrStatus.ACTIVE);
+        carService.changeStatus(entity.getCarNumber(), CarStatus.ACTIVE);
+        driverService.changeStatus(entity.getDriverUserName(), DriverStatus.ACTIVE);
+        teritoryService.changeStatus(entity.getTeritory(), TeritoryStatus.ACTIVE);
+
+        toDTO(entity);
+
+        return dto;
+
+    }
+
+
+    public static LocalDate checkWorkDateFormat(String workDate) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
         LocalDate localDate1;
         try {
             localDate1 = LocalDate.parse(workDate, dateTimeFormatter);
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new DateFormatWrongException("Sana " + LocalDate.now().getDayOfMonth() + "/" + LocalDate.now().getMonthValue()
                     + "/" + LocalDate.now().getYear() + " ko'rinishida berilishi kerak");
         }
 
         return localDate1;
-
     }
 
     public AvtoprokatDTO toDTO(AvtoprokatEntity entity) {
@@ -210,29 +179,31 @@ public class AvtoprokatService {
         dto.setDriverUserName(entity.getDriverUserName());
         dto.setWorkDate(String.valueOf(entity.getWorkDate().getDayOfMonth()) + entity.getWorkDate().getMonthValue()
                 + entity.getWorkDate().getYear());
+        dto.setProfileId(entity.getProfileId());
+//        dto.setProfile(entity.getProfile());
         dto.setCreatedDate(entity.getCreatedDate());
 
         return dto;
     }
 
-    public void avtoprokatValidation(AvtoprokatDTO dto){
+    public void avtoprokatValidation(AvtoprokatDTO dto) {
 
         if (dto.getDistrCode() == null) {
             throw new AppBadRequestException("Distr code kritilmadi");
         }
-        if (dto.getDistrName() == null){
+        if (dto.getDistrName() == null) {
             throw new AppBadRequestException("Distr ismi kiritlmadi");
         }
-        if (dto.getDistrUserName() == null){
+        if (dto.getDistrUserName() == null) {
             throw new AppBadRequestException("Distr username kiritilmadi");
         }
-        if (dto.getDriverName() == null){
+        if (dto.getDriverName() == null) {
             throw new AppBadRequestException("Haydovchi ismi kiritilmadi");
         }
-        if (dto.getCarNumber() == null){
+        if (dto.getCarNumber() == null) {
             throw new AppBadRequestException("Mashina raqami kiritilmadi");
         }
-        if (dto.getTeritory() == null){
+        if (dto.getTeritory() == null) {
             throw new AppBadRequestException("Hudud kirilmadi");
         }
 
@@ -252,15 +223,15 @@ public class AvtoprokatService {
 
         //distr parametrlari mosligi tekshiriladi
         Optional<DistrEntity> distrCodeName = distrRepository.findByDistrCodeAndName(dto.getDistrCode(), dto.getDistrName());
-        if (distrCodeName.isEmpty()){
+        if (distrCodeName.isEmpty()) {
             throw new ItemNotFoundException("Distr code va ismi mos kelmadi");
         }
         Optional<DistrEntity> nameUserName = distrRepository.findByNameAndUserName(dto.getDistrName(), dto.getDistrUserName());
-        if (nameUserName.isEmpty()){
+        if (nameUserName.isEmpty()) {
             throw new ItemNotFoundException("Distr ismi va username mos kelmadi");
         }
         Optional<DistrEntity> codeUserName = distrRepository.findByDistrCodeAndUserName(dto.getDistrCode(), dto.getDistrUserName());
-        if (codeUserName.isEmpty()){
+        if (codeUserName.isEmpty()) {
             throw new ItemNotFoundException("Distr code va username mos kelmadi");
         }
 
@@ -279,7 +250,7 @@ public class AvtoprokatService {
             throw new ItemNotFoundException("Bunday usernameli haydovchi mavjud emas");
         }
         Optional<DriverEnitity> name = driverRepository.findByName(dto.getDriverName());
-        if (name.isEmpty()){
+        if (name.isEmpty()) {
             throw new ItemNotFoundException("Bunday ismli haydovchi mavjud emas");
         }
         if (driver.get().getStatus().equals(DriverStatus.ACTIVE)) {
@@ -288,27 +259,33 @@ public class AvtoprokatService {
 
         //driver parametrlari tekshiriladi
         Optional<DriverEnitity> driverNameUserName = driverRepository.findByNameAndUserName(dto.getDriverName(), dto.getDriverUserName());
-        if (driverNameUserName.isEmpty()){
+        if (driverNameUserName.isEmpty()) {
             throw new ItemNotFoundException("Haydovchi ismi va userName mos kelmadi");
         }
-        List<AvtoprokatEntity> teritory = avtoprokatRepository.findByCreatedDateBetween(LocalDateTime.now().minusMinutes(10), LocalDateTime.now().minusMinutes(1));
-        if (!teritory.isEmpty()){
 
+        //teritory parametrllar tekshiriladi
+        Optional<TeritoryEntity> teritory = teritoryRepository.findByName(dto.getTeritory());
+        if (teritory.isEmpty()) {
+            throw new ItemNotFoundException("Bunday nomli hudud mavjud emas");
         }
 
     }
 
-    @Scheduled(fixedRate = 300000)
-    public void checkStatus(){
-        List<AvtoprokatEntity> avtoprokatEntityList = avtoprokatRepository.findByCreatedDateBetween(LocalDateTime.now().minusMinutes(10), LocalDateTime.now().minusMinutes(1));
+//    @Scheduled(fixedRate = 300000)
+//    @Scheduled(cron = "0 0/34 12-14 * * *")
+    @Scheduled(cron = "0 0 20,22 * * *")
+    public void checkStatus() {
+        System.out.println(LocalDateTime.now());
+        List<AvtoprokatEntity> avtoprokatEntityList = avtoprokatRepository.findByCreatedDateBetween(LocalDateTime.now().minusMinutes(60), LocalDateTime.now().minusMinutes(5));
 //        for (AvtoprokatEntity entity : avtoprokatEntityList){
 //            System.out.println(entity + " || " + "hours: " + entity.getCreatedDate().getHour() + " minutes: " + entity.getCreatedDate().getMinute() +
 //                    " day: " + entity.getCreatedDate().getDayOfMonth() + " month: " + entity.getCreatedDate().getMonthValue());
 //        }
-        for (AvtoprokatEntity entity: avtoprokatEntityList){
+        for (AvtoprokatEntity entity : avtoprokatEntityList) {
             distrRepository.changeStatus(DistrStatus.NOTACTIVE, entity.getDistrCode());
             driverRepository.changeStatus(DriverStatus.NOTACTIVE, entity.getDriverUserName());
             carRepository.changeStatus(CarStatus.NOTACTIVE, entity.getCarNumber());
+            teritoryRepository.changeStatus(TeritoryStatus.NOTACTIVE, entity.getTeritory());
         }
 
     }

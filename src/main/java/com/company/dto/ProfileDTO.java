@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProfileDTO {
-    private Integer id;
+    private String id;
     private String name;
     private String surname;
     private String userName;

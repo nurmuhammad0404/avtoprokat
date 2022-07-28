@@ -26,6 +26,7 @@ public class JwtFilter extends GenericFilterBean {
 
         final String authHeader = request.getHeader("Authorization");
 
+
         if (authHeader == null || authHeader.isEmpty() || !authHeader.startsWith("Bearer ")) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setHeader("Message", "Token kiritilmadi");

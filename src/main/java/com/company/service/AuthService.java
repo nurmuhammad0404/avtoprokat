@@ -1,20 +1,19 @@
 package com.company.service;
 
+
 import com.company.Util.JwtUtil;
-import com.company.dto.AuthDTO;
+import com.company.dto.LoginDTO;
 import com.company.dto.ProfileDTO;
-import com.company.dto.RegistrationDTO;
+import com.company.entity.LoginEntity;
 import com.company.entity.ProfileEntity;
-import com.company.enums.ProfileRole;
 import com.company.enums.ProfileStatus;
 import com.company.exc.*;
+import com.company.repository.LoginRepository;
 import com.company.repository.ProfileRepository;
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.JwtException;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -23,7 +22,10 @@ public class AuthService {
     @Autowired
     private ProfileRepository profileRepository;
 
-    public ProfileDTO login(AuthDTO dto) {
+    @Autowired
+    private LoginRepository loginRepository;
+
+    public ProfileDTO login(LoginDTO dto) {
         Optional<ProfileEntity> optional = profileRepository.findByPhoneAndPassword(dto.getPhone(), dto.getPswd());
         if (optional.isEmpty()) {
             throw new PhoneOrPasswordWrongException("Telefon nomer yoki parol xato");
@@ -40,6 +42,13 @@ public class AuthService {
         profile.setUserName(entity.getUserName());
         profile.setRole(entity.getRole());
         profile.setJwt(JwtUtil.doEncode(entity.getId(), entity.getRole(), 60));
+
+        LoginEntity loginEntity = new LoginEntity();
+        loginEntity.setPhone(dto.getPhone());
+        loginEntity.setPswd(dto.getPswd());
+        loginEntity.setCreatedDate(LocalDateTime.now());
+
+        loginRepository.save(loginEntity);
 
         return profile;
     }

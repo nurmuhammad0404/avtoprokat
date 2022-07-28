@@ -1,9 +1,9 @@
 package com.company.entity;
 
-import com.company.enums.DistrStatus;
 import com.company.enums.ProfileRole;
 import com.company.enums.ProfileStatus;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,8 +14,9 @@ import java.time.LocalDateTime;
 @Table(name = "profile")
 public class ProfileEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    protected String id;
     @Column
     private String name;
     @Column

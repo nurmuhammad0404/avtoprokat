@@ -1,32 +1,38 @@
 POST http://localhost:8080/driver/adm
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjI0OTI4OCwiZXhwIjoxNjU2Mjg1Mjg4LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.09unIIRGCgJS3-2apfmpAcm-NuUe_lfRS5myTQraP4g
 
 {
   "name": "Toshmat",
   "surname": "Toshmatov",
   "userName": "@toshmat",
-  "phone": "+9989145265894"
-}
-
-###
-
-GET http://localhost:8080/driver/adm
-Content-Type: application/json
-
-###
-
-PUT http://localhost:8080/driver/adm/1
-Content-Type: application/json
-
-{
-  "name": "Eshmat",
-  "surname": "Eshmatov",
-  "userName": "@eshmat",
   "status": "NOTACTIVE",
   "phone": "+998914785263"
 }
 
 ###
 
+GET http://localhost:8080/driver/adm
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjI0OTI4OCwiZXhwIjoxNjU2Mjg1Mjg4LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.09unIIRGCgJS3-2apfmpAcm-NuUe_lfRS5myTQraP4g
+
+
+###
+
+PUT http://localhost:8080/driver/adm/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjI0OTI4OCwiZXhwIjoxNjU2Mjg1Mjg4LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.09unIIRGCgJS3-2apfmpAcm-NuUe_lfRS5myTQraP4g
+
+{
+  "name": "Eshmat",
+  "surname": "Eshmatov",
+  "userName": "@eshmatjon",
+  "status": "NOTACTIVE",
+  "phone": "+998917854963"
+}
+
+###
+
 DELETE http://localhost:8080/driver/adm/2
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjI0OTI4OCwiZXhwIjoxNjU2Mjg1Mjg4LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.09unIIRGCgJS3-2apfmpAcm-NuUe_lfRS5myTQraP4g

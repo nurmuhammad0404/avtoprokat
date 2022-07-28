@@ -1,10 +1,13 @@
 package com.company.controller;
 
+
 import com.company.dto.ProfileDTO;
 import com.company.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/profile")
@@ -15,6 +18,7 @@ public class ProfileController {
 
     @PostMapping("/adm")
     public ResponseEntity<?> create(@RequestBody ProfileDTO dto){
+
         return ResponseEntity.ok(profileService.create(dto));
     }
 
@@ -25,7 +29,7 @@ public class ProfileController {
     }
 
     @GetMapping("/adm/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Integer id){
+    public ResponseEntity<?> getById(@PathVariable("id") String id){
         return ResponseEntity.ok(profileService.getById(id));
     }
 
@@ -45,13 +49,13 @@ public class ProfileController {
     }
 
     @PutMapping("/adm/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") Integer id,
+    public ResponseEntity<?> update(@PathVariable("id") String id,
                                     @RequestBody ProfileDTO dto){
         return ResponseEntity.ok(profileService.update(id, dto));
     }
 
     @DeleteMapping("/adm/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Integer id){
+    public ResponseEntity<?> delete(@PathVariable("id") String id){
         return ResponseEntity.ok(profileService.delete(id));
     }
 

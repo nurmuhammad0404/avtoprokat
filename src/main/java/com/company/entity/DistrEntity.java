@@ -22,13 +22,21 @@ public class DistrEntity {
     private String userName;
     @Column
     private String distrCode;
-    @Column(name = "phone_number", unique = true)
+    @Column(name = "phone_number")
     private String phoneNumber;
     @Column
     private Boolean visible = true;
     @Column
     @Enumerated(EnumType.STRING)
     private DistrStatus status = DistrStatus.NOTACTIVE;
+
+
+    @Column(name = "profile_id")
+    private String profileId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id", updatable = false, insertable = false)
+    private ProfileEntity profile;
+
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 

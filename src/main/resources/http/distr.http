@@ -1,31 +1,35 @@
 POST http://localhost:8080/distr/adm
 Content-Type: application/json
-
-{
-  "name": "Vali",
-  "surname": "Vali",
-  "userName": "@valijon",
-  "distrCode": "VALI01",
-  "phoneNumber": "+9989145268964"
-}
-
-###
-
-GET http://localhost:8080/distr/adm?page=0&size=4
-Content-Type: application/json
-
-###
-
-PUT http://localhost:8080/distr/adm/7
-Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjI0OTI4OCwiZXhwIjoxNjU2Mjg1Mjg4LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.09unIIRGCgJS3-2apfmpAcm-NuUe_lfRS5myTQraP4g
 
 {
   "name": "Ali",
   "surname": "Aliyev",
-  "userName": "@valijon",
-  "distrCode": "VALI01",
-  "phoneNumber": "+9989145268456"
+  "userName": "@alijon",
+  "distrCode": "ALI01",
+  "phone": "+998912546315"
 }
 
 ###
-DELETE http://localhost:8080/distr/adm/5
+
+GET http://localhost:8080/distr/adm
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjI0OTI4OCwiZXhwIjoxNjU2Mjg1Mjg4LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.09unIIRGCgJS3-2apfmpAcm-NuUe_lfRS5myTQraP4g
+
+###
+
+PUT http://localhost:8080/distr/adm/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjI0OTI4OCwiZXhwIjoxNjU2Mjg1Mjg4LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.09unIIRGCgJS3-2apfmpAcm-NuUe_lfRS5myTQraP4g
+
+{
+  "name": "Ali",
+  "surname": "Aliyev",
+  "userName": "@ali",
+  "distrCode": "ALI01",
+  "phone": "+998912546315"
+}
+
+###
+DELETE http://localhost:8080/distr/adm/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjI0OTI4OCwiZXhwIjoxNjU2Mjg1Mjg4LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.09unIIRGCgJS3-2apfmpAcm-NuUe_lfRS5myTQraP4g

@@ -1,5 +1,7 @@
 package com.company.dto;
 
+import com.company.entity.ProfileEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -8,6 +10,7 @@ import java.time.LocalDateTime;
 
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AvtoprokatDTO {
     private Integer id;
 
@@ -30,6 +33,8 @@ public class AvtoprokatDTO {
     @NotNull(message = "Haydovchi username kiritilmadi")
     private String driverUserName;
 
+    private String profileId;
+    private ProfileEntity profile;
     private LocalDateTime createdDate;
 
 }

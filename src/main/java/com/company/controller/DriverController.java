@@ -2,11 +2,16 @@ package com.company.controller;
 
 import com.company.dto.DistrDTO;
 import com.company.dto.DriverDTO;
+import com.company.dto.ProfileJwtDTO;
+import com.company.enums.ProfileRole;
 import com.company.service.DistrService;
 import com.company.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/driver")
@@ -16,8 +21,8 @@ public class DriverController {
     private DriverService driverService;
 
     @PostMapping("/adm")
-    public ResponseEntity<?> create(@RequestBody DriverDTO dto){
-        System.out.println(dto);
+    public ResponseEntity<?> create(@RequestBody DriverDTO dto, HttpServletRequest request){
+//        String pId = JwtUtil.getIdFromHeader(request);
         return ResponseEntity.ok(driverService.create(dto));
     }
 

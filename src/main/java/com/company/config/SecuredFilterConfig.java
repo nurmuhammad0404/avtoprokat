@@ -16,9 +16,10 @@ public class SecuredFilterConfig {
         bean.setFilter(jwtTokenFilter);
         bean.addUrlPatterns("/avtoprokat/adm/*");
         bean.addUrlPatterns("/car/adm/*");
-        bean.addUrlPatterns("/dist/adm/*");
+        bean.addUrlPatterns("/distr/adm/*");
         bean.addUrlPatterns("/driver/adm/*");
         bean.addUrlPatterns("/profile/adm/*");
+        bean.addUrlPatterns("/teritory/adm/*");
 
         return bean;
     }

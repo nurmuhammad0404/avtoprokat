@@ -22,7 +22,7 @@ public interface DriverRepository extends JpaRepository<DriverEnitity, Integer> 
 
     @Transactional
     @Modifying
-    @Query("update DriverEnitity set visible = :visible where id = :id")
+    @Query("update DistrEntity set visible = :visible where id = :id")
     int delete(@Param("visible") boolean b, @Param("id") Integer id);
 
     @Transactional

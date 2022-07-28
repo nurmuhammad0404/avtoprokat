@@ -1,16 +1,24 @@
-POST http://localhost:8080/teritory
+POST http://localhost:8080/teritory/adm
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjI0OTI4OCwiZXhwIjoxNjU2Mjg1Mjg4LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.09unIIRGCgJS3-2apfmpAcm-NuUe_lfRS5myTQraP4g
 
 {
-  "name": "Hudud4"
+  "name": "Hudud2"
 }
 ###
 
-GET http://localhost:8080/teritory?page=0&size=9
+GET http://localhost:8080/teritory/adm
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjI0OTI4OCwiZXhwIjoxNjU2Mjg1Mjg4LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.09unIIRGCgJS3-2apfmpAcm-NuUe_lfRS5myTQraP4g
 ###
 
-PUT http://localhost:8080/teritory/3/hudud9
+PUT http://localhost:8080/teritory/adm/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YThhODZlYTgxOWFiNjZhMDE4MTlhYjZlOWM1MDAwMCIsImlhdCI6MTY1NjI0OTI4OCwiZXhwIjoxNjU2Mjg1Mjg4LCJpc3MiOiJqd3QgcHJvZHVjdGlvbiIsInJvbGUiOiJBRE1JTiJ9.09unIIRGCgJS3-2apfmpAcm-NuUe_lfRS5myTQraP4g
+
+{
+  "name": "Hudud3"
+}
 ###
 
 DELETE http://localhost:8080/teritory/4

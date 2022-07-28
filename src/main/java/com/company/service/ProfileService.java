@@ -54,7 +54,7 @@ public class ProfileService {
         return profileDTOList;
     }
 
-    public ProfileEntity getById(Integer id){
+    public ProfileEntity getById(String id){
         return profileRepository.findById(id).orElseThrow(() -> {
             throw new ItemNotFoundException("Profil topilmadi");
         });
@@ -95,7 +95,7 @@ public class ProfileService {
         return profileDTOList;
     }
 
-    public ProfileDTO update(Integer id, ProfileDTO dto){
+    public ProfileDTO update(String id, ProfileDTO dto){
         ProfileValidation.isValid(dto);
         ProfileEntity entity = profileRepository.findById(id).orElseThrow(() -> {
             throw new ItemNotFoundException("Profil topilmadi");
@@ -119,9 +119,9 @@ public class ProfileService {
         return dto;
     }
 
-    public boolean delete(Integer id){
+    public boolean delete(String id){
         profileRepository.findById(id).orElseThrow(() -> {
-            throw new ItemNotFoundException("Profile not found");
+            throw new ItemNotFoundException("Profil topilmadi");
         });
 
         profileRepository.deleteById(id);

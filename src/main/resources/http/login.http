@@ -2,6 +2,6 @@ POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "phone": "+998912563415",
-  "pswd": "alihon123"
+  "phone": "+998915874963",
+  "pswd": "alihon568"
 }
