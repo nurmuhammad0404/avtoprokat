@@ -1,9 +1,7 @@
 package com.company.entity;
 
 import com.company.enums.CarStatus;
-import com.company.service.CarService;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
